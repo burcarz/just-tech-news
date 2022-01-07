@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sess = {
-    secret: 'Super secret secret',
+    secret: process.env.SESSION_PW,
     cookie: {},
     resave: false,
     saveUninitialized: true,
@@ -29,6 +29,7 @@ const sess = {
 // turn on routes
 app.use(routes);
 app.use(session(sess));
+app.use(require('./controllers/'))
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
